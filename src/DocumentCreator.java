@@ -12,7 +12,7 @@ public class DocumentCreator{
         Document document = new Document();
 
         try{
-            PdfWriter.getInstance(document, new FileOutputStream("Workout.pdf"));
+            PdfWriter.getInstance(document, new FileOutputStream(Settings.DOCUMENT_NAME));
             document.open();
             Paragraph title = new Paragraph("Workout");
             title.setAlignment(Paragraph.ALIGN_CENTER);
