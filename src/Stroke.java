@@ -1,10 +1,10 @@
 package src;
 import java.util.Random;
 public enum Stroke {
-    FREE("free",60),
-    BACK("back",70),
-    FLY("fly",65),
-    BREAST("breast",80);
+    FREE("free",Settings.FREE_PACE),
+    BACK("back",Settings.BACK_PACE),
+    FLY("fly",Settings.FLY_PACE),
+    BREAST("breast",Settings.BREAST_PACE);
 
     public final int pace;
     public final String string;

@@ -19,7 +19,6 @@ public class SetComponent {
         this.stroke = stroke;
         this.reps = reps;
         this.seconds = this.calculateSeconds();
-
     }
 
     //Getters 
@@ -33,6 +32,26 @@ public class SetComponent {
     public void setReps(int reps){this.reps = reps;}
     public void setStroke(Stroke stroke){this.stroke = stroke;}
     public void setSeconds(int seconds){this.seconds=seconds;}
+
+    public boolean equals(Object o){
+        if (this == o){return true;}
+        if (this == null || o == null){return false;}
+        if (this.getClass() != o.getClass()){return false;}
+        SetComponent c = (SetComponent)o;
+        return (this.componentDistance == c.componentDistance &&
+                this.reps == c.reps &&
+                this.stroke == c.stroke &&
+                this.seconds == c.seconds);
+    }
+    //only checks if the distance and stroke of the components are equal
+    public boolean typeEquals(Object o){
+        if (this == o){return true;}
+        if (this == null || o == null){return false;}
+        if (this.getClass() != o.getClass()){return false;}
+        SetComponent c = (SetComponent)o;
+        return (this.componentDistance == c.componentDistance &&
+                this.stroke == c.stroke);
+    }
 
     public int randomDistance(int min,int max){
         Random r = new Random();
