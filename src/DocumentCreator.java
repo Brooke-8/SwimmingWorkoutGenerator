@@ -6,18 +6,28 @@ import com.lowagie.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
+/*
+ * @author Brooke MacQuarrie
+ * DocumentCreator contains the main method that creates the document file, makes a given number of sets 
+ * using SetCreator, then formats them into the document
+ */
 
 public class DocumentCreator{
     public static void main( String[] args){
+        //If no argument given, use the default value
         if (args.length == 0){
-            
+            System.out.println("Length not given; using default value: "+Settings.DEFAULT_LENGTH);
+            args = new String[1];
+            args[0] = Settings.DEFAULT_LENGTH;
         }
+
+        //Make document, calculate goal set distances
         Document document = new Document();
         int goalDistance = Integer.parseInt(args[0]);
         int averageSetDistance = 25*Math.round((goalDistance/Settings.FORMAT.length)/25);
 
         try{
-            //Create and open document:
+            //Create and Open document:
             PdfWriter.getInstance(document, new FileOutputStream(Settings.DOCUMENT_NAME));
             document.open();
             
