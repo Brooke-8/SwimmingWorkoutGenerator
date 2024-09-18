@@ -5,26 +5,12 @@ package src;
  * Used to make sets with entirely random set components
  */
 public class RandomSet extends Set{
-
-    //Adds a set component with 25 <= distance <= 200; 1 <= reps <= 16, and random stroke
-    public SetComponent add(){
-        SetComponent c = new SetComponent();
-        c.randomDistance(25,200);
-        c.randomReps(1,16);
-        c.randomStroke();
-        setComponents.add(c);
-        this.mergeIfSame(setComponents.size()-1);
-        setDistance += c.getComponentDistance()*c.getReps();
-        return c;
-    }
-
     /*
     * Adds a set component with a random stroke that aims for a specific distance
     * Calculates max possible reps under the distance, then randomly chooses a rep number
     * increases distance until the next increase is past the goal distance
     */
-    public SetComponent add(int goalDistance){
-        SetComponent c = new SetComponent();
+    public SetComponent add(int goalDistance, SetComponent c){
         int maxReps = goalDistance/25;
         int reps = c.randomReps(1,maxReps);
         int distance = 25;
@@ -33,9 +19,6 @@ public class RandomSet extends Set{
         }
         c.setComponentDistance(distance);
         c.randomStroke();
-        setComponents.add(c);
-        this.mergeIfSame(setComponents.size()-1);
-        setDistance += c.getComponentDistance()*c.getReps();
         return c;
     }
     //Title used for the random set

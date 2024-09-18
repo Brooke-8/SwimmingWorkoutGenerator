@@ -10,10 +10,11 @@ public class SetCreator {
         switch(setType){
             case "RANDOMSET": set = new RandomSet(); break;
             case "COOLDOWN": set = new CooldownSet(); break;
+            case "WARMUP": set = new WarmupSet(); break;
             default: set = new RandomSet();
         }
         for (int j = 0; j <numberOfComponents; j++){
-            set.add(distance/numberOfComponents);
+            set.addComponent(distance/numberOfComponents);
         }
         return (set);
     }

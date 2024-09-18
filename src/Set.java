@@ -24,9 +24,17 @@ public abstract class Set {
         return this.setComponents.get(index);
     }
 
+    //Template Method for abstract add method
+    public SetComponent addComponent(int goalDistance){
+        SetComponent c = new SetComponent();
+        c = add(goalDistance,c); //Uses classes add
+        this.setComponents.add(c); //uses ArrayList add
+        this.mergeIfSame(setComponents.size()-1);
+        setDistance += c.getComponentDistance()*c.getReps();
+        return c;
+    }
     //Abstract methods
-    abstract public SetComponent add();
-    abstract public SetComponent add(int goalDistance);
+    abstract protected SetComponent add(int goalDistance, SetComponent c);
     abstract public String title();
 
     //Tool method used to merge two set components when adding if they share a distance and stroke.
@@ -48,7 +56,7 @@ public abstract class Set {
         this.setComponents.remove(index);
         return c;
     }
-    
+
     //Basic string representation of a set;
     public String toString(){
         StringBuilder str = new StringBuilder();

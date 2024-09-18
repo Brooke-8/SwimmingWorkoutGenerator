@@ -18,7 +18,7 @@ public class Settings {
      */
     public static final String[][] FORMAT = 
     {
-        {"RANDOMSET","5"},
+        {"WARMUP","5"},
         {"RANDOMSET","5"},
         {"RANDOMSET","5"},
         {"COOLDOWN","3"}

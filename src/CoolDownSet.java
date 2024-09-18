@@ -7,28 +7,12 @@ package src;
 public class CooldownSet extends Set{
 
      //Adds a set component that abides by cooldown set rules
-    public SetComponent add(){
-        SetComponent s = new SetComponent();
-        s.randomDistance(50, 200);
-        s.setReps(1);
+    public SetComponent add(int goalDistance, SetComponent c){
+        c.randomDistance(25, goalDistance);
+        c.setReps(1);
         Stroke[] slowStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST};
-        s.randomStroke(slowStrokes);
-        this.setComponents.add(s);
-        this.mergeIfSame(setComponents.size()-1);
-        setDistance += s.getComponentDistance();
-        return s;
-    }
-    //Same as add() but only adds components up to a certain distance
-    public SetComponent add(int goalDistance){
-        SetComponent s = new SetComponent();
-        s.randomDistance(25, goalDistance);
-        s.setReps(1);
-        Stroke[] slowStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST};
-        s.randomStroke(slowStrokes);
-        this.setComponents.add(s);
-        this.mergeIfSame(setComponents.size()-1);
-        setDistance += s.getComponentDistance();
-        return s;
+        c.randomStroke(slowStrokes);
+        return c;
     }
     //Returns the title to be used for the set.
     public String title(){
