@@ -1,8 +1,10 @@
 package src;
-
+/*
+ * @author Brooke MacQuarrie
+ * Used to make a set with a given setType, number of components, and perferred distance
+ */
 public class SetCreator {
-    public SetCreator(){
-    }
+    public SetCreator(){}
     public Set makeSet(String setType,int numberOfComponents, int distance){
         Set set;
         switch(setType){

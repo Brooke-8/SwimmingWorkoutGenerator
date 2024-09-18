@@ -19,9 +19,9 @@ public class RandomSet extends Set{
     }
 
     /*
-    * Adds a set of random stroke that aims for a specific distance
+    * Adds a set component with a random stroke that aims for a specific distance
     * Calculates max possible reps under the distance, then randomly chooses a rep number
-    * in
+    * increases distance until the next increase is past the goal distance
     */
     public SetComponent add(int goalDistance){
         SetComponent c = new SetComponent();
@@ -38,6 +38,7 @@ public class RandomSet extends Set{
         setDistance += c.getComponentDistance()*c.getReps();
         return c;
     }
+    //Title used for the random set
     public String title(){
         return "Set";
     }

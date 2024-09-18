@@ -25,4 +25,9 @@ public class Settings {
 
     };
 
+    //Default SetComponent Values [DANGER: DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING]
+    public static final int DEFAULT_COMPONENT_DISTANCE = 0;
+    public static final int DEFAULT_REPS = 0;
+    public static final int DEFAULT_SECONDS = 0;
+    public static final Stroke DEFAULT_STROKE = Stroke.FREE;
 }

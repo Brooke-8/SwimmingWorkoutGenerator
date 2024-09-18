@@ -1,5 +1,9 @@
 package src;
 import java.util.Random;
+
+/*
+ * Defines the Stroke data type. Each stroke has a string version and a pace
+ */
 public enum Stroke {
     FREE("free",Settings.FREE_PACE),
     BACK("back",Settings.BACK_PACE),
@@ -14,10 +18,9 @@ public enum Stroke {
         this.string = string;
     }
     
-    
-
     public static final int NUM_OF_STROKES = 4;
 
+    //Returns a random stroke
     public static Stroke randStroke(){
         Random r = new Random();
         int s = r.nextInt(NUM_OF_STROKES)+1;
@@ -30,6 +33,8 @@ public enum Stroke {
             default: return null;
         }
     }
+
+    //Returns a random stroke from the included list
     public static Stroke randStroke(Stroke[] include){
         Random r = new Random();
         int s = r.nextInt(include.length);
