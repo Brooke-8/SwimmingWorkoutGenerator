@@ -17,6 +17,7 @@ public class RandomSet extends Set{
         while (reps * distance < goalDistance){
             distance += 25;
         }
+        c.setMultiplier(1.25);
         c.setComponentDistance(distance);
         c.randomStroke();
         return c;

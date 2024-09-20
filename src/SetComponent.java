@@ -9,6 +9,7 @@ public class SetComponent {
     private int reps;
     private Stroke stroke;
     private int seconds;
+    private double secondsMultiplier;
 
     //Constructor that sets default values for a set component
     public SetComponent(){
@@ -16,13 +17,15 @@ public class SetComponent {
         reps = Settings.DEFAULT_REPS;
         seconds = Settings.DEFAULT_SECONDS;
         stroke = Settings.DEFAULT_STROKE;
+        secondsMultiplier = 1.0;
     }
     //Constructor that sets values to the given, and then calculates the seconds
-    public SetComponent(int reps, int distance, Stroke stroke){
+    public SetComponent(int reps, int distance, Stroke stroke, double  multiplier){
         this.componentDistance = distance;
         this.stroke = stroke;
         this.reps = reps;
         this.seconds = this.calculateSeconds();
+        this.secondsMultiplier = multiplier;
     }
 
     //Getters 
@@ -30,12 +33,26 @@ public class SetComponent {
     public int getReps(){return this.reps;}
     public Stroke getStroke(){return this.stroke;}
     public int getSeconds(){return this.seconds;}
+    public double getMultiplier(){return this.secondsMultiplier;}
 
     //Setters
-    public void setComponentDistance(int componentDistance){this.componentDistance = componentDistance;}
-    public void setReps(int reps){this.reps = reps;}
-    public void setStroke(Stroke stroke){this.stroke = stroke;}
-    public void setSeconds(int seconds){this.seconds=seconds;}
+    public void setComponentDistance(int componentDistance){
+        this.componentDistance = componentDistance;
+        this.seconds = (this.calculateSeconds());
+    }
+    public void setReps(int reps){
+        this.reps = reps;
+        this.seconds = (this.calculateSeconds());
+    }
+    public void setStroke(Stroke stroke){
+        this.stroke = stroke;
+        this.checkIM();
+        this.seconds = (this.calculateSeconds());
+    }
+    public void setMultiplier(double multiplier){
+        this.secondsMultiplier=multiplier;
+        this.seconds = (this.calculateSeconds());
+    }
 
 
     //equals method, checks if all variables in a set component are equal
@@ -65,7 +82,7 @@ public class SetComponent {
         int d = (int)Math.round((r.nextInt(max-min)+min)/25)*25;
         this.componentDistance = d;
         this.checkIM();
-        this.seconds = this.calculateSeconds();
+        this.seconds = (this.calculateSeconds());
         return d;
     }
 
@@ -103,7 +120,7 @@ public class SetComponent {
     private int calculateSeconds(){
         int pace = this.getStroke().pace;
         int distance = this.componentDistance;
-        int seconds = 5 * (int) Math.round(((pace / 100.0) * distance) / 5);
+        int seconds = 5 * (int) Math.round(((pace*secondsMultiplier / 100.0) * distance) / 5);
         return seconds;
     } 
 
@@ -112,7 +129,6 @@ public class SetComponent {
      */
     private void checkIM(){
         if (this.getStroke() == Stroke.IM){
-            System.out.println("True");
             int[] distanceIM = {100,200,300,400,800};
             Random r = new Random();
             int s = r.nextInt(distanceIM.length);
