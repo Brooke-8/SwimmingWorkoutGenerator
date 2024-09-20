@@ -22,7 +22,7 @@ public class RandomSet extends Set{
         return c;
     }
     //Title used for the random set
-    public String title(){
-        return "Set";
+    public String title(int setNum){
+        return ("Set " +setNum+" ("+this.setDistance + "m):\n");
     }
 }

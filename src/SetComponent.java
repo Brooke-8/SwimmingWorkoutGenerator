@@ -64,6 +64,7 @@ public class SetComponent {
         Random r = new Random();
         int d = (int)Math.round((r.nextInt(max-min)+min)/25)*25;
         this.componentDistance = d;
+        this.checkIM();
         this.seconds = this.calculateSeconds();
         return d;
     }
@@ -72,6 +73,7 @@ public class SetComponent {
     public Stroke randomStroke(){
         Stroke s = Stroke.randStroke();
         this.stroke = s;
+        this.checkIM();
         this.seconds = this.calculateSeconds();
         return s;
     }
@@ -79,6 +81,7 @@ public class SetComponent {
     public Stroke randomStroke(Stroke[] include){
         Stroke s = Stroke.randStroke(include);
         this.stroke = s;
+        this.checkIM();
         this.seconds = this.calculateSeconds();
         return s;
     }
@@ -103,6 +106,19 @@ public class SetComponent {
         int seconds = 5 * (int) Math.round(((pace / 100.0) * distance) / 5);
         return seconds;
     } 
+
+    /*
+     * Checks if the stroke is IM and than changes the distance
+     */
+    private void checkIM(){
+        if (this.getStroke() == Stroke.IM){
+            System.out.println("True");
+            int[] distanceIM = {100,200,300,400,800};
+            Random r = new Random();
+            int s = r.nextInt(distanceIM.length);
+            this.setComponentDistance(distanceIM[s]);
+        }
+    }
 
     //Takes the seconds and converts to a string that has minutes and seconds
     public String secondsToString(){

@@ -17,8 +17,8 @@ public class WarmupSet extends Set{
         return c;
     }
     //Title used for a warmup
-    public String title(){
-        return "Warm up";
+    public String title(int setNum){
+        return ("Warm up ("+this.setDistance + "m):\n");
     }
     public String toString(){
         StringBuilder str = new StringBuilder();

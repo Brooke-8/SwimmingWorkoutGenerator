@@ -32,20 +32,21 @@ public class DocumentCreator{
             document.open();
             
             //Formate Title
-            Paragraph title = new Paragraph("Workout");
+            Paragraph title = new Paragraph(Settings.DOCUMENT_TITLE);
             title.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(title);
 
             //Creating and Formatting Sets
             SetCreator creator = new SetCreator();
             int totalDistance = 0;
+            int countedSets = 0;
             for (int i = 0; i < Settings.FORMAT.length;i++){
                 String setType = Settings.FORMAT[i][0];
-                int setLength = Integer.parseInt(Settings.FORMAT[i][1]);
+                int setParts = Integer.parseInt(Settings.FORMAT[i][1]);
 
-                Set set = creator.makeSet(setType, setLength, averageSetDistance);
-
-                Paragraph s = new Paragraph(set.title()+" "+(i+1)+":\n" + set.toString()+"\n");
+                Set set = creator.makeSet(setType, setParts, averageSetDistance);
+                if (!(setType.equals("COOLDOWN") || setType.equals("WARMUP"))){countedSets++;}
+                Paragraph s = new Paragraph(set.title(countedSets) + set.toString()+"\n");
                 document.add(s);
                 totalDistance += set.getSetDistance();
 

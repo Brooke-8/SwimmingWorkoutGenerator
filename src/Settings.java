@@ -1,7 +1,8 @@
 package src;
 
 public class Settings {
-    public static final String DOCUMENT_NAME = "Workout.pdf";
+    public static final String DOCUMENT_NAME = "Workout["+java.time.LocalDate.now()+ "].pdf";
+    public static final String DOCUMENT_TITLE = "Workout ["+java.time.LocalDate.now()+ "]";
     public static final String SAVE_LOCATION = "";
     public static final String DEFAULT_LENGTH = "3000";
 
@@ -10,6 +11,7 @@ public class Settings {
     public static final int BACK_PACE = 70;
     public static final int FLY_PACE = 65;
     public static final int BREAST_PACE = 80;
+    public static final int IM_PACE = 75;
 
     /*
      * Workout Format
@@ -18,9 +20,10 @@ public class Settings {
      */
     public static final String[][] FORMAT = 
     {
-        {"WARMUP","5"},
-        {"RANDOMSET","5"},
-        {"RANDOMSET","5"},
+        {"WARMUP","6"},
+        {"RANDOMSET","1"},
+        {"RANDOMSET","6"},
+        {"RANDOMSET","4"},
         {"COOLDOWN","3"}
 
     };

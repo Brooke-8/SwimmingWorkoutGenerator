@@ -15,8 +15,8 @@ public class CooldownSet extends Set{
         return c;
     }
     //Returns the title to be used for the set.
-    public String title(){
-        return "Cooldown";
+    public String title(int setNum){
+        return "Cooldown ("+this.setDistance + "m):\n";
     }
     //Returns string of cooldown set, doesn't include seconds or reps.
     public String toString(){

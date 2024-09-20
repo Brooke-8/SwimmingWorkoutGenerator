@@ -27,15 +27,15 @@ public abstract class Set {
     //Template Method for abstract add method
     public SetComponent addComponent(int goalDistance){
         SetComponent c = new SetComponent();
-        c = add(goalDistance,c); //Uses classes add
-        this.setComponents.add(c); //uses ArrayList add
+        c = add(goalDistance,c); //Uses SetComponent add method
+        this.setComponents.add(c); //uses ArrayList add method
         this.mergeIfSame(setComponents.size()-1);
         setDistance += c.getComponentDistance()*c.getReps();
         return c;
     }
     //Abstract methods
     abstract protected SetComponent add(int goalDistance, SetComponent c);
-    abstract public String title();
+    abstract public String title(int setNum);
 
     //Tool method used to merge two set components when adding if they share a distance and stroke.
     protected void mergeIfSame(int latest){
