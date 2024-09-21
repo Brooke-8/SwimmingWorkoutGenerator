@@ -13,8 +13,15 @@ public class SetCreator {
             case "WARMUP": set = new WarmupSet(); break;
             default: set = new RandomSet();
         }
+        int distancePerComponent = distance/numberOfComponents;
         for (int j = 0; j <numberOfComponents; j++){
-            set.addComponent(distance/numberOfComponents);
+            set.addComponent(distancePerComponent);
+            //Adjusts distancePerComponent to based on how much of the distance has been used and how many components are left
+            distancePerComponent = (distance - set.setDistance)/(numberOfComponents-j+1); 
+            //Exits loop if there is not enough distance left to add another component;
+            if (distancePerComponent < 25){
+                break;
+            }
         }
         return (set);
     }

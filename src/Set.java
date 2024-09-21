@@ -28,6 +28,7 @@ public abstract class Set {
     public SetComponent addComponent(int goalDistance){
         SetComponent c = new SetComponent();
         c = add(goalDistance,c); //Uses SetComponent add method
+        goalCheckAndAdjust(goalDistance, c);
         this.setComponents.add(c); //uses ArrayList add method
         this.mergeIfSame(setComponents.size()-1);
         setDistance += c.getComponentDistance()*c.getReps();
@@ -45,6 +46,23 @@ public abstract class Set {
                 this.remove(latest);
             }
         }
+    }
+    private void goalCheckAndAdjust(int goalDistance, SetComponent c){
+        int closeness = c.getComponentDistance()*c.getReps()-goalDistance;
+        while (100 < closeness){
+            if (c.getReps()==1){
+                c.setComponentDistance(c.getComponentDistance()/2);
+            }
+            else{
+                c.setReps(c.getReps()-1);
+            }
+            closeness = c.getComponentDistance()*c.getReps()-goalDistance;
+        }
+        while (closeness < -100){
+            c.setReps(c.getReps()+1);
+            closeness = c.getComponentDistance()*c.getReps()-goalDistance;
+        }
+        
     }
 
     //Method used to remove a set component at a given index (Note remove for arraylists shifts elements so there is no empty space)

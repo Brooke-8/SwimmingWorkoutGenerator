@@ -8,7 +8,7 @@ public class SetComponent {
     private int componentDistance;
     private int reps;
     private Stroke stroke;
-    private int seconds;
+    private int seconds; //Seconds is the number of seconds based on the distance, pace, and seconds multiplier.
     private double secondsMultiplier;
 
     //Constructor that sets default values for a set component
@@ -21,11 +21,11 @@ public class SetComponent {
     }
     //Constructor that sets values to the given, and then calculates the seconds
     public SetComponent(int reps, int distance, Stroke stroke, double  multiplier){
-        this.componentDistance = distance;
+        this.componentDistance = roundToNearest25(distance);
         this.stroke = stroke;
         this.reps = reps;
-        this.seconds = this.calculateSeconds();
         this.secondsMultiplier = multiplier;
+        updateSeconds();
     }
 
     //Getters 
@@ -37,28 +37,27 @@ public class SetComponent {
 
     //Setters
     public void setComponentDistance(int componentDistance){
-        this.componentDistance = componentDistance;
-        this.seconds = (this.calculateSeconds());
+        this.componentDistance = roundToNearest25(componentDistance);
+        updateSeconds();
     }
     public void setReps(int reps){
         this.reps = reps;
-        this.seconds = (this.calculateSeconds());
+        updateSeconds();
     }
     public void setStroke(Stroke stroke){
         this.stroke = stroke;
         this.checkIM();
-        this.seconds = (this.calculateSeconds());
+        updateSeconds();
     }
     public void setMultiplier(double multiplier){
         this.secondsMultiplier=multiplier;
-        this.seconds = (this.calculateSeconds());
+        updateSeconds();
     }
-
 
     //equals method, checks if all variables in a set component are equal
     public boolean equals(Object o){
         if (this == o){return true;}
-        if (this == null || o == null){return false;}
+        if (o == null){return false;}
         if (this.getClass() != o.getClass()){return false;}
         SetComponent c = (SetComponent)o;
         return (this.componentDistance == c.componentDistance &&
@@ -78,38 +77,38 @@ public class SetComponent {
 
     //Sets the components distance to be a random multiple of 25 between the given values, then returns the distance
     public int randomDistance(int min,int max){
-        Random r = new Random();
-        int d = (int)Math.round((r.nextInt(max-min)+min)/25)*25;
-        this.componentDistance = d;
-        this.checkIM();
-        this.seconds = (this.calculateSeconds());
-        return d;
+        if ((max-min) <= 0){
+            max++;
+        }
+        this.componentDistance = roundToNearest25(new Random().nextInt(max - min) + min);
+        checkIM();
+        updateSeconds();
+        return this.componentDistance;
     }
 
     //Sets the components stroke to be a random stroke, and then returns the stroke
     public Stroke randomStroke(){
-        Stroke s = Stroke.randStroke();
-        this.stroke = s;
-        this.checkIM();
-        this.seconds = this.calculateSeconds();
-        return s;
+        this.stroke = Stroke.randStroke();
+        checkIM();
+        updateSeconds();
+        return this.stroke;
     }
     //Another version of random stroke that lets you define which strokes to include
     public Stroke randomStroke(Stroke[] include){
-        Stroke s = Stroke.randStroke(include);
-        this.stroke = s;
-        this.checkIM();
-        this.seconds = this.calculateSeconds();
-        return s;
+        this.stroke = Stroke.randStroke(include);
+        checkIM();
+        updateSeconds();
+        return this.stroke;
     }
 
     //Sets the components reps to a random in between given values, then returns the reps
     public int randomReps(int min, int max){
-        Random r= new Random();
-        int reps = r.nextInt(max-min)+min;
-        this.reps = reps;
-        this.seconds = this.calculateSeconds();
-        return reps;
+        if ((max-min) <= 0){
+            max++;
+        }
+        this.reps = new Random().nextInt(max-min)+min;
+        updateSeconds();
+        return this.reps;
     }
 
     /*
@@ -123,28 +122,28 @@ public class SetComponent {
         int seconds = 5 * (int) Math.round(((pace*secondsMultiplier / 100.0) * distance) / 5);
         return seconds;
     } 
+    private void updateSeconds() {
+        this.seconds = calculateSeconds();
+    }
 
-    /*
-     * Checks if the stroke is IM and than changes the distance
-     */
+    private int roundToNearest25(int distance){
+        return (int)Math.round(distance/25.0)*25;
+    }
+
+
+    //Checks if the stroke is IM and than changes the distance
     private void checkIM(){
-        if (this.getStroke() == Stroke.IM){
+        if (this.stroke == Stroke.IM){
             int[] distanceIM = {100,200,300,400,800};
-            Random r = new Random();
-            int s = r.nextInt(distanceIM.length);
-            this.setComponentDistance(distanceIM[s]);
+            this.componentDistance = distanceIM[new Random().nextInt(distanceIM.length)];
         }
     }
 
     //Takes the seconds and converts to a string that has minutes and seconds
     public String secondsToString(){
-        int t = this.seconds;
-        int minutes = Math.floorDiv(t, 60);
-        int s = t - (60*minutes);
-        if (s <=9){
-            return (minutes+ ":"+s+"0");
-        }
-        return (minutes+":"+s);
+        int minutes = this.seconds/60;
+        int s = seconds % 60;
+        return String.format("%d:%02d", minutes, s);
     }
       
 }

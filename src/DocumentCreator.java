@@ -45,6 +45,7 @@ public class DocumentCreator{
                 int setParts = Integer.parseInt(Settings.FORMAT[i][1]);
 
                 Set set = creator.makeSet(setType, setParts, averageSetDistance);
+                
                 if (!(setType.equals("COOLDOWN") || setType.equals("WARMUP"))){countedSets++;}
                 Paragraph s = new Paragraph(set.title(countedSets) + set.toString()+"\n");
                 document.add(s);

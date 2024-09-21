@@ -23,7 +23,7 @@ public class CooldownSet extends Set{
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < setComponents.size();i++){
             SetComponent c = setComponents.get(i);
-            str.append(c.getComponentDistance() + " "+ c.getStroke().string +"\n");
+            str.append(c.getComponentDistance()*c.getReps() + " "+ c.getStroke().string +"\n");
         }
         return str.toString();
     }
