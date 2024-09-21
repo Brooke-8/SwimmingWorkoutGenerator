@@ -14,10 +14,13 @@ public class SetCreator {
             default: set = new RandomSet();
         }
         int distancePerComponent = distance/numberOfComponents;
+        int remainingDistance = distance;
         for (int j = 0; j <numberOfComponents; j++){
             set.addComponent(distancePerComponent);
+            remainingDistance = distance - set.getSetDistance();
+
             //Adjusts distancePerComponent to based on how much of the distance has been used and how many components are left
-            distancePerComponent = (distance - set.setDistance)/(numberOfComponents-j+1); 
+            distancePerComponent = (int)(double)(remainingDistance)/(numberOfComponents-j); 
             //Exits loop if there is not enough distance left to add another component;
             if (distancePerComponent < 25){
                 break;

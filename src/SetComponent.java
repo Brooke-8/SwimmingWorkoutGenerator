@@ -31,6 +31,7 @@ public class SetComponent {
     //Getters 
     public int getComponentDistance(){return this.componentDistance;}
     public int getReps(){return this.reps;}
+    public int getTotalDistance(){return this.componentDistance*this.reps;}
     public Stroke getStroke(){return this.stroke;}
     public int getSeconds(){return this.seconds;}
     public double getMultiplier(){return this.secondsMultiplier;}
@@ -77,7 +78,7 @@ public class SetComponent {
 
     //Sets the components distance to be a random multiple of 25 between the given values, then returns the distance
     public int randomDistance(int min,int max){
-        if ((max-min) <= 0){
+        while ((max-min) <= 0){
             max++;
         }
         this.componentDistance = roundToNearest25(new Random().nextInt(max - min) + min);
@@ -103,7 +104,7 @@ public class SetComponent {
 
     //Sets the components reps to a random in between given values, then returns the reps
     public int randomReps(int min, int max){
-        if ((max-min) <= 0){
+        while ((max-min) <= 0){
             max++;
         }
         this.reps = new Random().nextInt(max-min)+min;

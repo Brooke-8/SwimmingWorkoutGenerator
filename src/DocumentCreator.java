@@ -20,6 +20,10 @@ public class DocumentCreator{
             args = new String[1];
             args[0] = Settings.DEFAULT_LENGTH;
         }
+        if (Integer.parseInt(args[0]) < 0){
+            System.out.println("Length provided is invalid; using default value: "+Settings.DEFAULT_LENGTH);
+            args[0] = Settings.DEFAULT_LENGTH;
+        }
 
         //Make document, calculate goal set distances
         Document document = new Document();

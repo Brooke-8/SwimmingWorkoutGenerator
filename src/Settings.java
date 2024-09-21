@@ -20,11 +20,11 @@ public class Settings {
      */
     public static final String[][] FORMAT = 
     {
-        {"WARMUP","6"},
-        {"RANDOMSET","1"},
-        {"RANDOMSET","6"},
-        {"RANDOMSET","4"},
-        {"COOLDOWN","3"}
+        {"WARMUP","5"},
+        {"RANDOMSET","5"},
+        {"RANDOMSET","5"},
+        {"RANDOMSET","5"},
+        {"COOLDOWN","5"}
 
     };
 
