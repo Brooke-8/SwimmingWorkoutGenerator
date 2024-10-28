@@ -4,50 +4,50 @@ import java.util.ArrayList;
  * @author: Brooke MacQuarrie
  * Abstract Set class that defines how sets should behave
  */
-public abstract class Set {
-    protected ArrayList<SetComponent> setComponents;
-    protected int setDistance;
-    protected int setSize;
+public class Set {
+
+    private ArrayList<SetComponent> setComponents;
+    private int distance;
+    private int reps;
+    private double multiplier;
+    private String title;
     
     //Default constructor used by all sets. Creates an ArrayList to store set components
-    public Set(){
-        ArrayList<SetComponent> setComponents = new ArrayList<SetComponent>();
-        this.setComponents = setComponents;
-        this.setDistance = 0;
-        this.setSize = 0;
+    private Set(SetBuilder builder){
+        this.setComponents = builder.setComponents;
+        this.distance = builder.distance;
+        this.reps = builder.reps;
+        this.multiplier = builder.multiplier;
+    }
+
+    public abstract static class SetBuilder{
+        protected ArrayList<SetComponent> setComponents;
+        protected int distance;
+        protected int targetDistance;
+        protected int reps;
+        protected double multiplier;
+        protected String title;
+
+        public SetBuilder(int targetDistance, double multiplier){
+            this.targetDistance = targetDistance;
+            this.multiplier = multiplier;
+            this.reps = 0;
+            this.distance = 0;
+            this.setComponents = new ArrayList<SetComponent>();
+        }
+        public abstract SetBuilder addComponent();
+        public Set build(){
+            return new Set(this);
+        }
     }
 
     //Getters
-    public int getSetDistance(){return this.setDistance;}
-    public int getSetSize(){return this.setSize;}
-    public SetComponent getSetComponent(int index) throws IndexOutOfBoundsException{
-        if (index < 0 || index >= this.setComponents.size()){
-            throw new IndexOutOfBoundsException("Invalid index for Set");
-        }
-        return this.setComponents.get(index);
-    }
+    public int getDistance(){return this.distance;}
+    public int getReps(){return this.reps;}
+    public double getMultiplier(){return this.multiplier;}
+    public String getTitle(){return this.title;}
 
-    //Template Method for abstract add method
-    public SetComponent addComponent(int goalDistance){
-        SetComponent component = new SetComponent();
-
-        component = add(goalDistance,component); //Uses abstract add method
-        goalCheckAndAdjust(goalDistance, component);
-
-        this.setComponents.add(component); //adds component to the list
-        if(setComponents.size() >=2){
-            mergeIfSame(setComponents.size()-1);
-        };
-
-        this.setDistance += component.getTotalDistance();
-        this.setSize++;
-        return component;
-    }
-
-    //Abstract methods
-    abstract protected SetComponent add(int goalDistance, SetComponent c);
-    abstract public String title(int setNum);
-
+    /* 
     //Tool method used to merge two set components when adding if they share a distance and stroke.
     protected void mergeIfSame(int index){
         if (index <= 0 || index >= this.setComponents.size()){
@@ -101,7 +101,7 @@ public abstract class Set {
         }
         return (runningTotal == set.setDistance);
     }
-
+    */
     //Basic string representation of a set;
     public String toString(){
         StringBuilder str = new StringBuilder();
@@ -116,5 +116,76 @@ public abstract class Set {
     }
 
 
+    //Random Set Builder
+    public static class RandomSetBuilder extends SetBuilder{
+        public RandomSetBuilder(int targetDistance, double multiplier){
+            super(targetDistance, multiplier);
+            this.reps = 1;
+            this.title = "RandomSet";
+        }
+        public SetBuilder addComponent(){
+            int componentTargetDistance = targetDistance/reps;
+            SetComponent component = new SetComponent();
+            int maxReps = componentTargetDistance/25;
+            int componentReps = component.randomReps(1,maxReps);
+            int componentDistance = 25;
+            while (componentReps * componentDistance < componentTargetDistance){
+                componentDistance += 25;
+            }
+            component.setMultiplier(multiplier);
+            component.setComponentDistance(componentDistance);
+            component.randomStroke();
+            this.distance += component.getTotalDistance();
+            setComponents.add(component);
+            return this;
+        }
+    }
+
+    //Warmup Set Builder
+    public static class WarmupSetBuilder extends SetBuilder{
+        public WarmupSetBuilder(int targetDistance, double multiplier){
+            super(targetDistance, multiplier);
+            this.reps = 1;
+            this.title = "WarmupSet";
+        }
+        public SetBuilder addComponent(){
+            int componentTargetDistance = targetDistance/reps;
+            SetComponent component = new SetComponent();
+            if (this.setComponents.size() == 0){
+                component.randomDistance(100, 400);
+                component.setReps(1);
+                Stroke[] starting = {Stroke.FREE,Stroke.BACK};
+                component.randomStroke(starting);
+            }
+            else{
+                component.randomDistance(25, componentTargetDistance);
+                component.setReps(1);
+                component.randomStroke();
+            }
+            this.distance += component.getTotalDistance();
+            setComponents.add(component);
+            return this;
+        }
+    }
+
+    //Cooldown Set Builder
+    public static class CooldownSetBuilder extends SetBuilder{
+        public CooldownSetBuilder(int targetDistance, double multiplier){
+            super(targetDistance, multiplier);
+            this.reps = 1;
+            this.title = "CooldownSet";
+        }
+        public SetBuilder addComponent(){
+            int componentTargetDistance = targetDistance/reps;
+            SetComponent component = new SetComponent();
+            component.randomDistance(25, componentTargetDistance);
+            component.setReps(1);
+            Stroke[] slowStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST};
+            component.randomStroke(slowStrokes);
+            this.distance += component.getTotalDistance();
+            setComponents.add(component);
+            return this;
+        }
+    }
 
 }

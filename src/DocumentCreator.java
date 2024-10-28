@@ -14,6 +14,7 @@ import java.io.FileOutputStream;
 
 public class DocumentCreator{
     public static void main( String[] args){
+        /* 
         //If no argument given, use the default value
         if (args.length == 0){
             System.out.println("Length not given; using default value: "+Settings.DEFAULT_LENGTH);
@@ -67,6 +68,7 @@ public class DocumentCreator{
         } finally {
             document.close();
         }
-        
+        */
     }
+        
 }

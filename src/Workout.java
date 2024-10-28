@@ -3,8 +3,13 @@ package src;
  * @author Brooke MacQuarrie
  * Used to make a set with a given setType, number of components, and perferred distance
  */
-public class SetCreator {
-    public SetCreator(){}
+public class Workout {
+    private int distance;
+    private String template;
+    private String title;
+
+    /* 
+    public Workout(){}
     public Set makeSet(String setType,int numberOfComponents, int distance){
         Set set;
         switch(setType){
@@ -28,5 +33,6 @@ public class SetCreator {
         }
         return (set);
     }
+        */
 
 }
