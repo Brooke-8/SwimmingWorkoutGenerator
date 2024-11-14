@@ -1,38 +1,74 @@
 package src;
+import java.util.ArrayList;
+
 /*
  * @author Brooke MacQuarrie
  * Used to make a set with a given setType, number of components, and perferred distance
  */
 public class Workout {
     private int distance;
-    private String template;
+    private String[][] format;
     private String title;
+    private ArrayList<Set> sets;
 
-    /* 
-    public Workout(){}
-    public Set makeSet(String setType,int numberOfComponents, int distance){
-        Set set;
-        switch(setType){
-            case "RANDOMSET": set = new RandomSet(); break;
-            case "COOLDOWN": set = new CooldownSet(); break;
-            case "WARMUP": set = new WarmupSet(); break;
-            default: set = new RandomSet();
-        }
-        int distancePerComponent = distance/numberOfComponents;
-        int remainingDistance = distance;
-        for (int j = 0; j <numberOfComponents; j++){
-            set.addComponent(distancePerComponent);
-            remainingDistance = distance - set.getSetDistance();
+    private Workout(WorkoutBuilder workout){
+        this.distance = workout.distance;
+        this.format = workout.format;
+        this.title = workout.title;
+        this.sets = workout.sets;
 
-            //Adjusts distancePerComponent to based on how much of the distance has been used and how many components are left
-            distancePerComponent = (int)(double)(remainingDistance)/(numberOfComponents-j); 
-            //Exits loop if there is not enough distance left to add another component;
-            if (distancePerComponent < 25){
-                break;
-            }
-        }
-        return (set);
     }
-        */
+
+    public static class WorkoutBuilder{
+        protected int distance;
+        protected int targetDistance;
+        protected String[][] format;
+        protected String title;
+        protected ArrayList<Set> sets;
+
+        public WorkoutBuilder(int targetDistance, String[][] format, String title){
+            this.targetDistance = targetDistance;
+            this.distance = 0;
+            this.format = format;
+            this.title = title;
+            this.sets = new ArrayList<Set>(format.length);
+        }
+        public WorkoutBuilder addSet(Set set){
+            this.sets.add(set);
+            return this;
+        }
+        public WorkoutBuilder addFromFormat(){
+            int distancePerSet = 25*Math.round((targetDistance/format.length)/25);
+            for (int i = 0; i<format.length;i++){
+                Set set = makeSet(format[i][0],Integer.parseInt(format[i][1]),distancePerSet);
+                this.sets.add(set);
+            }
+            return this;
+        }
+        public Workout build(){
+            return new Workout(this);
+        }
+    
+    }
+
+    public int getDistance() {return distance;}
+    public String[][] getFormat() {return format;}
+    public String getTitle() {return title;}
+    public ArrayList<Set> getSets(){return sets;}
+
+    
+    public static Set makeSet(String setType,int numberOfComponents, int targetDistance){
+        Set.SetBuilder setBuilder;
+        switch(setType){
+            case "RANDOMSET": setBuilder = new Set.RandomSetBuilder(targetDistance,1); break;
+            case "COOLDOWN": setBuilder = new Set.CooldownSetBuilder(targetDistance,1); break;
+            case "WARMUP": setBuilder = new Set.WarmupSetBuilder(targetDistance,1); break;
+            default: setBuilder = new Set.RandomSetBuilder(targetDistance,1);
+        }
+        for (int j = 0; j <numberOfComponents; j++){
+            setBuilder.addComponent();
+        }
+        return (setBuilder.build());
+    }
 
 }
