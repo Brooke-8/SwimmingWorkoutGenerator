@@ -18,6 +18,7 @@ public class Set {
         this.distance = builder.distance;
         this.reps = builder.reps;
         this.multiplier = builder.multiplier;
+        this.title = builder.title;
     }
 
     public abstract static class SetBuilder{
@@ -122,7 +123,7 @@ public class Set {
         public RandomSetBuilder(int targetDistance, double multiplier){
             super(targetDistance, multiplier);
             this.reps = 1;
-            this.title = "RandomSet";
+            this.title = "Random";
         }
         public SetBuilder addComponent(){
             int componentTargetDistance = targetDistance/reps;
@@ -147,7 +148,7 @@ public class Set {
         public WarmupSetBuilder(int targetDistance, double multiplier){
             super(targetDistance, multiplier);
             this.reps = 1;
-            this.title = "WarmupSet";
+            this.title = "Warm Up";
         }
         public SetBuilder addComponent(){
             int componentTargetDistance = targetDistance/reps;
@@ -174,7 +175,7 @@ public class Set {
         public CooldownSetBuilder(int targetDistance, double multiplier){
             super(targetDistance, multiplier);
             this.reps = 1;
-            this.title = "CooldownSet";
+            this.title = "Cooldown";
         }
         public SetBuilder addComponent(){
             int componentTargetDistance = targetDistance/reps;

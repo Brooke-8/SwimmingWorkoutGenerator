@@ -35,6 +35,7 @@ public class Workout {
         }
         public WorkoutBuilder addSet(Set set){
             this.sets.add(set);
+            this.distance += set.getDistance();
             return this;
         }
         public WorkoutBuilder addFromFormat(){
@@ -42,6 +43,7 @@ public class Workout {
             for (int i = 0; i<format.length;i++){
                 Set set = makeSet(format[i][0],Integer.parseInt(format[i][1]),distancePerSet);
                 this.sets.add(set);
+                this.distance += set.getDistance();
             }
             return this;
         }

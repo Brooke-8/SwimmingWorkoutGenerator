@@ -48,13 +48,14 @@ public class DocumentCreator{
             Workout workout = workoutBuilder.build();
 
             for (Set set:workout.getSets()){
-                Paragraph setDistance = new Paragraph("Distance: "+set.getDistance());
+                Paragraph setDistance = new Paragraph(set.getTitle()+" - "+set.getDistance()+"m:");
                 Paragraph setInfo = new Paragraph(set.toString());
                 document.add(setDistance);
                 document.add(setInfo);
+                document.add(new Paragraph("\n"));
             }
             //Add total distance
-            Paragraph total = new Paragraph("Total: " +workout.getDistance());
+            Paragraph total = new Paragraph("Total: " +workout.getDistance()+"m");
             total.setAlignment(Paragraph.ALIGN_CENTER);
             document.add(total);
             
