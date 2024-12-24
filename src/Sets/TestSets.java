@@ -33,7 +33,7 @@ public class TestSets {
             for (int d : componentDistances){
                 int componentDistance = DistanceUtilities.random25Factor(d);
                 int componentReps = d/componentDistance;
-                Stroke[] warmupStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST, Stroke.IM};
+                Stroke[] warmupStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST, Stroke.IM,Stroke.KICK};
                 Stroke componentStroke = Stroke.randStroke(warmupStrokes);
                 SetComponent component = new SetComponent(componentReps, componentDistance,componentStroke, multiplier);
                 this.setComponents.add(component);
@@ -74,7 +74,7 @@ public class TestSets {
             for (int d : componentDistances){
                 int componentDistance = DistanceUtilities.random25Factor(d);
                 int componentReps = d/componentDistance;
-                Stroke[] slowStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST};
+                Stroke[] slowStrokes = {Stroke.FREE,Stroke.BACK,Stroke.BREAST, Stroke.DBACK,Stroke.KICK};
                 Stroke componentStroke = Stroke.randStroke(slowStrokes);
                 SetComponent component = new SetComponent(componentReps, componentDistance,componentStroke, multiplier);
                 this.setComponents.add(component);
