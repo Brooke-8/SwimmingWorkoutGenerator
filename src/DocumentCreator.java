@@ -16,22 +16,8 @@ import java.io.FileOutputStream;
  */
 
 public class DocumentCreator{
-    public static void main( String[] args){
-        
-        //If no argument given, use the default value
-        if (args.length == 0){
-            System.out.println("Length not given; using default value: "+Settings.DEFAULT_LENGTH);
-            args = new String[1];
-            args[0] = Settings.DEFAULT_LENGTH;
-        }
-        if (Integer.parseInt(args[0]) < 0){
-            System.out.println("Length provided is invalid; using default value: "+Settings.DEFAULT_LENGTH);
-            args[0] = Settings.DEFAULT_LENGTH;
-        }
-
-        //Make document, calculate goal set distances
+    public static void main(String[] args){
         Document document = new Document();
-        int targetDistance = Integer.parseInt(args[0]);
         try{
             //Create and Open document:
             PdfWriter.getInstance(document, new FileOutputStream(Settings.DOCUMENT_NAME));
@@ -43,8 +29,10 @@ public class DocumentCreator{
             document.add(title);
 
             //Creating and Formatting Sets
-            WorkoutBuilder workoutBuilder = new WorkoutBuilder(targetDistance,Settings.FORMAT,Settings.DOCUMENT_TITLE);
-            workoutBuilder.addFromFormat();
+            WorkoutBuilder workoutBuilder = new WorkoutBuilder(Settings.WORKOUT_DISTANCE,Settings.DOCUMENT_TITLE);
+            for (String[] format : Settings.FORMAT){
+                workoutBuilder.addSet(format[0],Integer.parseInt(format[1]));
+            }
             Workout workout = workoutBuilder.build();
 
             for (Set set:workout.getSets()){

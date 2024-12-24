@@ -7,70 +7,63 @@ import java.util.ArrayList;
  */
 public class Workout {
     private int distance;
-    private String[][] format;
     private String title;
     private ArrayList<Set> sets;
 
     private Workout(WorkoutBuilder workout){
-        this.distance = workout.distance;
-        this.format = workout.format;
+        this.distance = workout.currentDistance;
         this.title = workout.title;
         this.sets = workout.sets;
-
-    }
-
-    public static class WorkoutBuilder{
-        protected int distance;
-        protected int targetDistance;
-        protected String[][] format;
-        protected String title;
-        protected ArrayList<Set> sets;
-
-        public WorkoutBuilder(int targetDistance, String[][] format, String title){
-            this.targetDistance = targetDistance;
-            this.distance = 0;
-            this.format = format;
-            this.title = title;
-            this.sets = new ArrayList<Set>(format.length);
-        }
-        public WorkoutBuilder addSet(Set set){
-            this.sets.add(set);
-            this.distance += set.getDistance();
-            return this;
-        }
-        public WorkoutBuilder addFromFormat(){
-            int distancePerSet = 25*Math.round((targetDistance/format.length)/25);
-            for (int i = 0; i<format.length;i++){
-                Set set = makeSet(format[i][0],Integer.parseInt(format[i][1]),distancePerSet);
-                this.sets.add(set);
-                this.distance += set.getDistance();
-            }
-            return this;
-        }
-        public Workout build(){
-            return new Workout(this);
-        }
-    
     }
 
     public int getDistance() {return distance;}
-    public String[][] getFormat() {return format;}
     public String getTitle() {return title;}
     public ArrayList<Set> getSets(){return sets;}
 
-    
-    public static Set makeSet(String setType,int numberOfComponents, int targetDistance){
-        Set.SetBuilder setBuilder;
-        switch(setType){
-            case "RANDOMSET": setBuilder = new Set.RandomSetBuilder(targetDistance,1); break;
-            case "COOLDOWN": setBuilder = new Set.CooldownSetBuilder(targetDistance,1); break;
-            case "WARMUP": setBuilder = new Set.WarmupSetBuilder(targetDistance,1); break;
-            default: setBuilder = new Set.RandomSetBuilder(targetDistance,1);
+    public static class WorkoutBuilder{
+        private int currentDistance;
+        private int remainingDistance;
+        private String title;
+        private ArrayList<Set> sets;
+
+        public WorkoutBuilder(int distance, String title){
+            this.remainingDistance = distance;
+            this.currentDistance = 0;
+            this.title = title;
+            this.sets = new ArrayList<Set>();
         }
-        for (int j = 0; j <numberOfComponents; j++){
-            setBuilder.addComponent();
+
+        private void updateDistance(int addedDistance){
+            currentDistance += addedDistance;
+            remainingDistance -= addedDistance;
         }
-        return (setBuilder.build());
+        
+        public WorkoutBuilder addSet(Set set){
+            if (set.getDistance() <= remainingDistance) {
+                sets.add(set);
+                updateDistance(set.getDistance());
+               
+            } else {
+                System.err.println("Failed to add set "+ set.getTitle() + ", reached given distance");
+            }
+            return this;
+        }
+        public void addSet(String setType, int setDistance){
+            Set newSet = makeSet(setType, setDistance);
+            this.addSet(newSet);
+        }
+
+        public Workout build(){return new Workout(this);}
     }
 
+    public static Set makeSet(String setType,int setDistance){
+        Set set;
+        switch(setType){
+            case "RANDOMSET": set = new Set.RandomSet(setDistance,1); break;
+            case "COOLDOWN": set = new Set.CooldownSet(setDistance,1); break;
+            case "WARMUP": set = new Set.WarmupSet(setDistance,1); break;
+            default: set = new Set.RandomSet(setDistance,1);
+        }
+        return (set.generate());
+    }
 }

@@ -4,7 +4,6 @@ public class Settings {
     public static final String DOCUMENT_NAME = "Workout["+java.time.LocalDate.now()+ "].pdf";
     public static final String DOCUMENT_TITLE = "Workout ["+java.time.LocalDate.now()+ "]";
     public static final String SAVE_LOCATION = "";
-    public static final String DEFAULT_LENGTH = "3000";
 
     //Set paces to the number of seconds it takes for your fastest 100m.
     public static final int FREE_PACE = 60;
@@ -18,13 +17,14 @@ public class Settings {
      * "RANDOMSET" - Completely random set
      * "COOLDOWN" - Cooldown set with no times or reps; only includes cooldown strokes.
      */
+    public static final int WORKOUT_DISTANCE = 4000;
     public static final String[][] FORMAT = 
     {
-        {"WARMUP","5"},
-        {"RANDOMSET","5"},
-        {"RANDOMSET","5"},
-        {"RANDOMSET","5"},
-        {"COOLDOWN","5"}
+        {"WARMUP","1000"},
+        {"RANDOMSET","1000"},
+        {"RANDOMSET","1000"},
+        {"RANDOMSET","1000"},
+        {"COOLDOWN","1000"}
 
     };
 
