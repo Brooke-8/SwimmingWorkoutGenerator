@@ -1,6 +1,8 @@
 package src;
 import java.util.ArrayList;
 
+import src.Sets.*;
+
 /*
  * @author Brooke MacQuarrie
  * Used to make a set with a given setType, number of components, and perferred distance
@@ -59,10 +61,10 @@ public class Workout {
     public static Set makeSet(String setType,int setDistance){
         Set set;
         switch(setType){
-            case "RANDOMSET": set = new Set.RandomSet(setDistance,1); break;
-            case "COOLDOWN": set = new Set.CooldownSet(setDistance,1); break;
-            case "WARMUP": set = new Set.WarmupSet(setDistance,1); break;
-            default: set = new Set.RandomSet(setDistance,1);
+            case "RANDOMSET": set = new TestSets.RandomSet(setDistance,1); break;
+            case "COOLDOWN": set = new TestSets.CooldownSet(setDistance,1); break;
+            case "WARMUP": set = new TestSets.WarmupSet(setDistance,1); break;
+            default: set = new TestSets.RandomSet(setDistance,1);
         }
         return (set.generate());
     }

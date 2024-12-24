@@ -1,5 +1,15 @@
 {
     "java.project.referencedLibraries": [
       "lib/**/*.jar"
+    ],
+    "cSpell.words": [
+      "Dolphinkick",
+      "DOLPHINKICKB",
+      "DOLPHINKICKF",
+      "FLUTTERB",
+      "FLUTTERF",
+      "Whipkick",
+      "WHIPKICKB",
+      "WHIPKICKF"
     ]
 }

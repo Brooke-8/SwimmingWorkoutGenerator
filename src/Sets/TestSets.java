@@ -1,46 +1,7 @@
-package src;
+package src.Sets;
 import java.util.ArrayList;
-/*
- * @author: Brooke MacQuarrie
- * Abstract Set class that defines how sets should behave
- */
-public abstract class Set {
-
-    protected ArrayList<SetComponent> setComponents;
-    protected int distance;
-    protected int reps;
-    protected double multiplier;
-    protected String title;
-    
-    //Default constructor used by all sets. Creates an ArrayList to store set components
-    public Set(int distance, double multiplier){
-        this.setComponents = new ArrayList<SetComponent>();
-        this.distance = distance;
-        this.multiplier = multiplier;
-    }
-
-    public abstract Set generate();
-
-    //Getters
-    public int getDistance(){return this.distance;}
-    public int getReps(){return this.reps;}
-    public double getMultiplier(){return this.multiplier;}
-    public String getTitle(){return this.title;}
-    public int getNumberOfComponents(){return setComponents.size();}
-    
-    //Basic string representation of a set;
-    public String toString(){
-        StringBuilder str = new StringBuilder();
-        for (SetComponent component : setComponents){
-            str.append(String.format("%d x %d %s @ %s\n", 
-                                     component.getReps(), 
-                                     component.getComponentDistance(), 
-                                     component.getStroke().string, 
-                                     component.secondsToString()));
-        }
-        return str.toString();
-    }
-
+import src.*;
+public class TestSets {
     public static class RandomSet extends Set{
         public RandomSet(int distance, double multiplier){
             super(distance, multiplier);
@@ -56,6 +17,7 @@ public abstract class Set {
                 SetComponent component = new SetComponent(componentReps, componentDistance,componentStroke, multiplier);
                 this.setComponents.add(component);
             }
+            mergeSimilarComponents(setComponents);
             return this;
         }
     }
@@ -76,7 +38,27 @@ public abstract class Set {
                 SetComponent component = new SetComponent(componentReps, componentDistance,componentStroke, multiplier);
                 this.setComponents.add(component);
             }
+            mergeSimilarComponents(setComponents);
             return this;
+        }
+        public String toString(){
+            StringBuilder str = new StringBuilder();
+            for (SetComponent component : setComponents){
+                str.append(component.getTotalDistance()+" "+ component.getStroke()+"\n");
+            }
+            return str.toString();
+        }
+        protected void mergeSimilarComponents(ArrayList<SetComponent> components){
+            for (int i = 1; i < components.size(); i ++){
+                SetComponent component1 = components.get(i-1);
+                SetComponent component2 = components.get(i);
+                if (component1.getStroke() == component2.getStroke()){
+                    int newDistance = component1.getTotalDistance() + component2.getTotalDistance();
+                    components.remove(i-1);
+                    components.remove(i-1);
+                    components.add(i-1,new SetComponent(1, newDistance, component1.getStroke(), component1.getMultiplier()));
+                }
+            }
         }
         
     }
@@ -97,7 +79,28 @@ public abstract class Set {
                 SetComponent component = new SetComponent(componentReps, componentDistance,componentStroke, multiplier);
                 this.setComponents.add(component);
             }
+            mergeSimilarComponents(setComponents);
             return this;
+        }
+
+        protected void mergeSimilarComponents(ArrayList<SetComponent> components){
+            for (int i = 1; i < components.size(); i ++){
+                SetComponent component1 = components.get(i-1);
+                SetComponent component2 = components.get(i);
+                if (component1.getStroke() == component2.getStroke()){
+                    int newDistance = component1.getTotalDistance() + component2.getTotalDistance();
+                    components.remove(i-1);
+                    components.remove(i-1);
+                    components.add(i-1,new SetComponent(1, newDistance, component1.getStroke(), component1.getMultiplier()));
+                }
+            }
+        }
+        public String toString(){
+            StringBuilder str = new StringBuilder();
+            for (SetComponent component : setComponents){
+                str.append(component.getTotalDistance()+" "+ component.getStroke()+"\n");
+            }
+            return str.toString();
         }
     }
 }

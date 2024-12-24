@@ -4,6 +4,7 @@ import com.lowagie.text.DocumentException;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.pdf.PdfWriter;
 
+import src.Sets.*;
 import src.Workout.WorkoutBuilder;
 
 import java.io.FileNotFoundException;

@@ -17,7 +17,7 @@ public class Settings {
      * "RANDOMSET" - Completely random set
      * "COOLDOWN" - Cooldown set with no times or reps; only includes cooldown strokes.
      */
-    public static final int WORKOUT_DISTANCE = 4000;
+    public static final int WORKOUT_DISTANCE = 5000;
     public static final String[][] FORMAT = 
     {
         {"WARMUP","1000"},
@@ -27,10 +27,4 @@ public class Settings {
         {"COOLDOWN","1000"}
 
     };
-
-    //Default SetComponent Values [DANGER: DO NOT CHANGE UNLESS YOU KNOW WHAT YOU ARE DOING]
-    public static final int DEFAULT_COMPONENT_DISTANCE = 0;
-    public static final int DEFAULT_REPS = 0;
-    public static final int DEFAULT_SECONDS = 0;
-    public static final Stroke DEFAULT_STROKE = Stroke.FREE;
 }
