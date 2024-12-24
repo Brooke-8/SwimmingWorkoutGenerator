@@ -47,12 +47,12 @@ public abstract class Set {
         StringBuilder str = new StringBuilder();
         for (SetComponent component : setComponents) {
             if (component.getReps() == 1) {
-                str.append(String.format("%d %s @ %s\n",
+                str.append(String.format("- %d %s on %s\n",
                                          component.getComponentDistance(),
                                          component.getStroke(),
                                          component.secondsToString()));
             } else {
-                str.append(String.format("%d x %d %s @ %s\n", 
+                str.append(String.format("- %d x %d %s on %s\n", 
                                          component.getReps(), 
                                          component.getComponentDistance(), 
                                          component.getStroke(), 
